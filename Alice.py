@@ -158,7 +158,7 @@ class HttpApl(object):
 
 def date_event(date):
     action = "date&filter=" + date
-    event_url = f'https://62go.ru/api/get/?key=Nnf8osgw4jslnsl346774fliw&action={action}'.format(action)
+    event_url = f'https://62go.ru/api/get/?key=Nnf8osgw4jslnsl346774fliw&action={action}'
     response = requests.get(event_url)
     data = response.json()
     if data["status"] == "success":
@@ -241,7 +241,7 @@ def handle_dialog(req, res):
         for i in event_time1:
             if i in user_text:
                 action = "first"
-                event_url = f'https://62go.ru/api/get/?key=Nnf8osgw4jslnsl346774fliw&action={action}'.format(action)
+                event_url = f'https://62go.ru/api/get/?key=Nnf8osgw4jslnsl346774fliw&action={action}'
                 response = requests.get(event_url)
                 data = response.json()
                 title = data["data"]["NAME"]
