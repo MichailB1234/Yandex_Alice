@@ -26,9 +26,9 @@ class HttpApl(object):
             'Authorization': 'OAuth %s' % token
         }
 
-    def log(self, error_text, response):
+    def log(self, error_text):
         log_file = open('YandexApi.log', 'a')
-        log_file.write(error_text + '\n')  # +response)
+        log_file.write(error_text + '\n')
         log_file.close()
 
     def validate_api_response(self, response, required_key_name=None):
@@ -37,14 +37,14 @@ class HttpApl(object):
         print(content)
         if response.status_code == 200:
             if required_key_name and required_key_name not in content:
-                self.log('Unexpected API response. Missing required key: %s' % required_key_name, response=response)
+                self.log('Unexpected API response. Missing required key: %s' % required_key_name)
                 return None
         elif content and 'error_message' in content:
-            self.log('Error API response. Error message: %s' % content['error_message'], response=response)
+            self.log('Error API response. Error message: %s' % content['error_message'])
             return None
         elif content and 'message' in content:
             print(1)
-            self.log('Error API response. Error message: %s' % content['message'], response=response)
+            self.log('Error API response. Error message: %s' % content['message'])
             return None
         else:
             response.raise_for_status()
@@ -61,7 +61,7 @@ class HttpApl(object):
     def checkOutPlace(self):
         result = self.SESSION.get('https://dialogs.yandex.net/api/v1/status')
         content = self.validate_api_response(result)
-        if content != None:
+        if content is not None:
             return content['images']['quota']
         return None
 
@@ -78,7 +78,7 @@ class HttpApl(object):
         print(data1)
         result = self.SESSION.post(url=path, data=data1)
         content = self.validate_api_response(result)
-        if content != None:
+        if content is not None:
             return content['image']
         return None
 
@@ -98,7 +98,7 @@ class HttpApl(object):
         path = 'https://dialogs.yandex.net/api/v1/skills/{skills_id}/images'.format(skills_id=self.skills)
         result = self.SESSION.post(url=path, files={'file': ("img.jpg", open("img.jpg", 'rb'))})
         content = self.validate_api_response(result)
-        if content != None:
+        if content is not None:
             return content['image']
         return None
 
@@ -106,7 +106,7 @@ class HttpApl(object):
         path = 'https://dialogs.yandex.net/api/v1/skills/{skills_id}/images'.format(skills_id=self.skills)
         result = self.SESSION.post(url=path, files={'file': ("img2.jpg", open("img2.jpg", 'rb'))})
         content = self.validate_api_response(result)
-        if content != None:
+        if content is not None:
             return content['image']
         return None
 
@@ -121,7 +121,7 @@ class HttpApl(object):
         path = 'https://dialogs.yandex.net/api/v1/skills/{skills_id}/images'.format(skills_id=self.skills)
         result = self.SESSION.get(url=path)
         content = self.validate_api_response(result)
-        if content != None:
+        if content is not None:
             return content['images']
         return None
 
@@ -135,7 +135,7 @@ class HttpApl(object):
                                                                                              img_id=img_id)
         result = self.SESSION.delete(url=path)
         content = self.validate_api_response(result)
-        if content != None:
+        if content is not None:
             return content['result']
         return None
 
