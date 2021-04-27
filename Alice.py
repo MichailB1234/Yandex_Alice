@@ -221,7 +221,6 @@ def handle_dialog(req, res):
     event_time2 = ["сегодня", "на сегодняшний", "сегодняшнее"]
     event_time3 = ["завтра", "на завтрашний", "завтрашнее"]
     event_time4 = ["послезавтра", "на послезавтрашний", "послезавтрашнее"]
-    print(req['request']['original_utterance'])
     flag = True
     for K in range(1):
         if "перейти" in user_text and "источник" in user_text:
@@ -371,6 +370,7 @@ def handle_dialog(req, res):
                             title = data["data"][0]["NAME"]
                             if data["data"][0]['PICTURE'] is not None:
                                 picture_url = "https://62go.ru" + data["data"][0]['PICTURE']
+                                print(picture_url)
                                 id_picture = http_alice.downloadImageFile(picture_url)["id"]
                                 title = data["data"][0]["NAME"]
                                 res['response']['card'] = {}
@@ -422,11 +422,12 @@ def add_suggest(user_id, url):
         for suggest in session['suggests']
     ]
     sessionStorage[user_id] = session
-    suggests.append({
+    suggest1 = [{
         "title": "Перейти в источник",
         "url": url,
         "hide": True
-    })
+    }]
+    suggests = suggest1 + suggests
     return suggests
 
 if __name__ == '__main__':
